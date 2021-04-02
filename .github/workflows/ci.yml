@@ -1,0 +1,33 @@
+name: "CI"
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  lintAndTest:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: Use Node.js v12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install Packages
+        run: npm install
+      - name: Format Check
+        run: npm run format-check
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm test
+      - name: Run Action Code
+        uses: ./
+        with:
+          milliseconds: 5000
