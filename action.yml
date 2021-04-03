@@ -40,14 +40,18 @@ inputs:
     required: false
   debug:
     description: Whether to tell the GitHub client to log details of its requests
-    default: false
+    required: false
+    default: "false"
   user-agent:
     description: An optional user-agent string
+    required: false
     default: actions/github-script
   previews:
     description: A comma-separated list of API previews to accept
+    required: false
   result-encoding:
     description: Either "string" or "json" (default "json")—how the result will be encoded
+    required: false
     default: json
 outputs:
   result:
