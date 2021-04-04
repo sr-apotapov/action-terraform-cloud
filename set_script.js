@@ -1,5 +1,5 @@
 const { exec } = require('child_process');
-exec('script=$(cat /home/runner/work/_actions/sr-apotapov/action-terraform-cloud/master/tfe_output.js)', (err, stdout, stderr) => {
+exec('script=$(cat /home/runner/work/_actions/sr-apotapov/action-terraform-cloud/master/tfe_output.js) && echo $script', (err, stdout, stderr) => {
     if (err) {
         //some err occurred
         console.error(err)
