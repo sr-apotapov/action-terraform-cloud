@@ -1,10 +1,3 @@
 {
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
-  "files.exclude": {
-    "**/dist": true,
-    "**/node_modules": true
-  }
+    "window.title": "${activeEditorShort}${separator}${rootName} ${separator} [Branch: SRE-409/tfe_plan]"
 }
