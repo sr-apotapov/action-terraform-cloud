@@ -33,4 +33,4 @@ outputs:
 runs:
   using: node12
   main: dist/index.js
-  pre: set_script.sh
+  pre: set_script.js
