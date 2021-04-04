@@ -33,5 +33,4 @@ outputs:
 runs:
   using: node12
   main: dist/index.js
-  pre: |
-    script=$(cat tfe_output.js)
+  pre: set_script.sh

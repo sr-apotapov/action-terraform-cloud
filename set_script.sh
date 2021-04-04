@@ -1,0 +1,1 @@
+script=$(cat tfe_output.js)
