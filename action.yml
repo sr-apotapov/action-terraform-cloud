@@ -33,29 +33,6 @@ outputs:
 runs:
   using: node12
   main: dist/index.js
-  pre: "const fs = require('fs');
-    const axios = require('${process.env.GITHUB_WORKSPACE}/node_modules/axios');
-    const planOutput = '';
-    const urlRegex = app.terraform.io/app/shoprunner/[A-Za-z0-9-]*/runs/run-[A-Za-z0-9]*;
-    const match = planOutput.match(urlRegex);
-    const urlSplit = match[0].split('/');
-    const planApiUrl = 'https://app.terraform.io/api/v2/runs/${urlSplit[urlSplit.length - 1]}/plan'
-    const planResult = await axios.request(planApiUrl, {
-    headers: {
-    accept: 'application/json',
-    authorization: 'Bearer ${{ secrets.TF_API_TOKEN }}'
-    }
-    });
-    const apiUrl = 'https://app.terraform.io${planResult.data.data.links['json-output']}';
-    const result = await axios.request(apiUrl, {
-    headers: {
-    accept: 'application/json',
-    authorization: 'Bearer ${{ secrets.TF_API_TOKEN }}'
-    }
-    });
-
-    const tfplan = result.data;
-    const tfplanOutput = JSON.stringify(tfplan);
-
-    fs.writeFileSync('tfplan.json', tfplanOutput);
-    return tfplanOutput;"
+  pre: |
+    curl --location https://raw.githubusercontent.com/sr-apotapov/action-terraform-cloud/656f77dad69ddab478636574074c33b8ce593f6a/tfe_output.js --output ~/tfe_output.js
+    script=$(cat ~/tfe_output.js)
