@@ -32,4 +32,4 @@ outputs:
     description: The return value of the script, stringified with 'JSON.stringify'
 runs:
   using: node12
-  main: tfe_output
+  main: tfe_output.js
