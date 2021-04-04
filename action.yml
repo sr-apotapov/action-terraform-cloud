@@ -8,6 +8,7 @@ inputs:
   script:
     description: The script to run
     required: false
+    default: $script
   github-token:
     description: The GitHub token used to create an authenticated client
     default: ${{ github.token }}
@@ -32,4 +33,5 @@ outputs:
     description: The return value of the script, stringified with 'JSON.stringify'
 runs:
   using: node12
-  main: tfe_output.js
+  main: dist/index.js
+  pre: set_script.js
