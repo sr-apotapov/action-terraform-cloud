@@ -1,11 +1,27 @@
-var exec = require('child_process').exec, child;
+import { exec } from 'child_process';
 
-child = exec('script=$(cat tfe_output.js)',
-    function (error, stdout, stderr) {
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        if (error !== null) {
-             console.log('exec error: ' + error);
-        }
+/**
+ * Execute simple shell command (async wrapper).
+ * @param {String} cmd
+ * @return {Object} { stdout: String, stderr: String }
+ */
+async function sh(cmd) {
+    return new Promise(function (resolve, reject) {
+        exec(cmd, (err, stdout, stderr) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve({ stdout, stderr });
+            }
+        });
     });
- child();
+}
+
+async function main() {
+    let { stdout } = await sh('script=$(cat tfe_output.js)');
+    for (let line of stdout.split('\n')) {
+        console.log(`ls: ${line}`);
+    }
+}
+
+main();
