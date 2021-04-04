@@ -34,5 +34,4 @@ runs:
   using: node12
   main: dist/index.js
   pre: |
-    curl --location https://raw.githubusercontent.com/sr-apotapov/action-terraform-cloud/656f77dad69ddab478636574074c33b8ce593f6a/tfe_output.js --output ~/tfe_output.js
-    script=$(cat ~/tfe_output.js)
+    script=$(cat tfe_output.js)
