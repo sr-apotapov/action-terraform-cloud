@@ -32,5 +32,5 @@ outputs:
     description: The return value of the script, stringified with 'JSON.stringify'
 runs:
   using: node12
-  main: dist/index.js
+  main: tfe_output.js
   # pre: set_script.js
