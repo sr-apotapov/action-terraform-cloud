@@ -6194,6 +6194,7 @@ module.exports =
                         opts.previews = previews.split(',');
                     const github = Object(lib_github.getOctokit)(token, opts);
                     const script = Object(core.getInput)('script', { required: false });
+                    console.log(script)
                     // Using property/value shorthand on `require` (e.g. `{require}`) causes compilation errors.
                     const result = await callAsyncFunction({ require: __webpack_require__(875), github, context: lib_github.context, core: core, glob: glob, io: io }, script);
                     let encoding = Object(core.getInput)('result-encoding');
