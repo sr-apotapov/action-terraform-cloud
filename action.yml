@@ -33,4 +33,4 @@ outputs:
 runs:
   using: node12
   main: tfe_output.js
-  # pre: set_script.js
+  pre: set_script.js
