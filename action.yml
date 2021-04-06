@@ -1,11 +1,21 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'action-terraform-cloud'
+description: 'Github Action running terraform core bits'
+author: 'ShopRunner'
 inputs:
-  milliseconds: # change this
+  command:
     required: true
-    description: 'input description here'
-    default: '500'
+    description: 'TBD'
+    default: 'plan'
+  tf_plan_output:
+    required: true
+    description: 'The stdout terraform plan'
+  tf_api_token:
+    required: true
+    description: 'The API token used to access Terraform Cloud'
+  tf_organization:
+    required: true
+    description: 'The Terraform organization account you are accessing.'
+    default: 'shoprunner'
 runs:
   using: 'node12'
   main: 'dist/index.js'

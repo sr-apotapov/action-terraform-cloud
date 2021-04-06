@@ -1,6 +1,7 @@
 # Dependency directory
 node_modules
 .vscode
+tmp/*
 # Rest pulled from https://github.com/github/gitignore/blob/master/Node.gitignore
 # Logs
 logs
@@ -100,4 +101,3 @@ lib/**/*
 
 # Jetbrains
 /.idea/
-tmp/*

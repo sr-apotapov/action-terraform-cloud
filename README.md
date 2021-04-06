@@ -22,9 +22,12 @@ before publishing your action for use.
 > Add detailed usage information AND update the yaml code below 
 
 ```yaml
-uses: shoprunner/action-name@main
-with:
-  milliseconds: 5000
+- name: T
+  uses: hashicorp/setup-terraform
+- name: FOO
+  uses: shoprunner/action-terraform-cloud@main
+  with:
+    tf_api_token: ${{ secrets.TF_API_TOKEN }}
 ```
 
 ## Publishing the Action

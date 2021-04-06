@@ -1,19 +1,27 @@
-import * as core from '@actions/core'
-import {wait} from './wait'
+import * as util from 'util';
+import * as fs from 'fs';
+import * as core from '@actions/core';
 
-async function run(): Promise<void> {
+import * as tfcloud from './lib/tfcloud';
+
+const writeFile = util.promisify(fs.writeFile);
+
+async function run (): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const tfApiToken: string = core.getInput('tf_api_token');
+    const tfOrg: string = core.getInput('tf_organization');
+    const planOutput = core.getInput('tf_plan_output'); // should be input
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    // @todo try the better way :)
+    // exec("terraform init");
+    // const result = await exec("terraform plan");
 
-    core.setOutput('time', new Date().toTimeString())
+    const plan = await tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
+
+    await writeFile('tfplan.json', Buffer.from(plan));
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(error.message);
   }
 }
 
-run()
+run();

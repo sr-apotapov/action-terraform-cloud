@@ -28,6 +28,7 @@ module.exports = {
       ignoreStrings: true,
       ignoreUrls: true
     }],
+    'no-template-curly-in-string': ['warn'],
     'import/extensions': [
       'warn',
       {
