@@ -1,36 +1,11 @@
-name: GitHub Script
-author: GitHub
-description: Run simple scripts using the GitHub client
-branding:
-  color: blue
-  icon: code
+name: 'Your name here'
+description: 'Provide a description here'
+author: 'Your name or organization here'
 inputs:
-  script:
-    description: The script to run
-    required: false
-  github-token:
-    description: The GitHub token used to create an authenticated client
-    default: ${{ github.token }}
-    required: false
-  debug:
-    description: Whether to tell the GitHub client to log details of its requests
-    required: false
-    default: "false"
-  user-agent:
-    description: An optional user-agent string
-    required: false
-    default: actions/github-script
-  previews:
-    description: A comma-separated list of API previews to accept
-    required: false
-  result-encoding:
-    description: Either "string" or "json" (default "json")—how the result will be encoded
-    required: false
-    default: json
-outputs:
-  result:
-    description: The return value of the script, stringified with 'JSON.stringify'
+  milliseconds: # change this
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
 runs:
-  using: node12
-  main: dist/index.js
-  pre: set_script.js
+  using: 'node12'
+  main: 'dist/index.js'

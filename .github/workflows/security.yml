@@ -1,0 +1,21 @@
+name: Security
+on:
+  pull_request:
+
+jobs:
+  vulnerabilityAlerts:
+    name: Vulnerability Alerts
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Vulnerability Alerts Action Repo
+        uses: actions/checkout@v2
+        with:
+          repository: ShopRunner/action-vulnerability-alerts
+          token: "${{ secrets.GH_ACTION_TOKEN }}"
+          ref: refs/tags/v0.2.0
+      - name: Run the Vulnerability Alerts Action
+        uses: ./
+        with:
+          access-token: "${{ secrets.GH_ACTION_TOKEN }}"
+          repository: "${{ github.repository }}"
