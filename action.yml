@@ -15,7 +15,7 @@ inputs:
   tf_organization:
     required: true
     description: 'The Terraform organization account you are accessing.'
-    default: 'shoprunner'
+    default: 'ShopRunner'
 runs:
   using: 'node12'
   main: 'dist/index.js'
