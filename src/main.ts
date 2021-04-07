@@ -14,16 +14,16 @@ async function run (): Promise<void> {
     const tfOrg: string = core.getInput('tf_organization');
 
     var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
-    const init = await exec('terraform init') //tf init
-    console.log(init)
+    await exec('terraform init') //tf init
+    // console.log(init)
 
     const fmt = await exec('terraform fmt -check -diff') // tf fmt with diff
     fmt.replace(/#|_|/g,function(match) {return replaceChars[match];}) // cleaning up the tf fmt results
-    console.log(fmt)
+    // console.log(fmt)
 
     const planOutput = await exec('terraform plan -no-color') // tf plan
     planOutput.replace(/#|_|/g,function(match) {return replaceChars[match];})
-    console.log(planOutput) // cleaning up the tf plan results
+    // console.log(planOutput) // cleaning up the tf plan results
     
     // const planOutput = core.getInput('plan_output'); // should be input
     // @todo try the better way :)
