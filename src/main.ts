@@ -16,16 +16,16 @@ async function run (): Promise<void> {
     var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
     const init = await exec('terraform init') //tf init
     console.log(init)
-    
+
     const fmt = await exec('terraform fmt -check -diff') // tf fmt with diff
     fmt.replace(/#|_|/g,function(match) {return replaceChars[match];}) // cleaning up the tf fmt results
     console.log(fmt)
 
-    const tfplan = await exec('terraform plan -no-color') // tf plan
-    tfplan.replace(/#|_|/g,function(match) {return replaceChars[match];})
-    console.log(tfplan) // cleaning up the tf plan results
+    const planOutput = await exec('terraform plan -no-color') // tf plan
+    planOutput.replace(/#|_|/g,function(match) {return replaceChars[match];})
+    console.log(planOutput) // cleaning up the tf plan results
     
-    // const planOutput = core.getInput('tf_plan_output'); // should be input
+    // const planOutput = core.getInput('plan_output'); // should be input
     // @todo try the better way :)
     // async function terraform (){
     // const code_scan_logs = await exec('ls ./code_scan/*.tap | xargs cat')
@@ -41,7 +41,7 @@ async function run (): Promise<void> {
     //   });
     // };
 
-    const plan = await tfcloud.getJsonPlan(tfplan, tfOrg, tfApiToken);
+    const plan = await tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
 
     await writeFile('tfplan.json', Buffer.from(plan));
   } catch (error) {
