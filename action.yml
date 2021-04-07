@@ -13,7 +13,7 @@ inputs:
     required: true
     description: 'The API token used to access Terraform Cloud'
   tf_organization:
-    required: true
+    required: false
     description: 'The Terraform organization account you are accessing.'
     default: 'ShopRunner'
 runs:
