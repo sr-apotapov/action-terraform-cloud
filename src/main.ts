@@ -16,7 +16,7 @@ async function run (): Promise<void> {
 
     // @todo try the better way :)
     // async function terraform (){
-    var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
+    // var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
 
     // const code_scan_logs = await exec('ls ./code_scan/*.tap | xargs cat')
     // const code_scan_logs_result = code_scan_logs.replace(/#|_|/g,function(match) {return replaceChars[match];}) // cleaning up the code_scan_results
