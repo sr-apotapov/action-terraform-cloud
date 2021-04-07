@@ -3,11 +3,11 @@ description: 'Github Action running terraform core bits'
 author: 'ShopRunner'
 inputs:
   command:
-    required: true
+    required: false
     description: 'TBD'
     default: 'plan'
   tf_plan_output:
-    required: true
+    required: false
     description: 'The stdout terraform plan'
   tf_api_token:
     required: true
