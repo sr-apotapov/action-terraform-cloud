@@ -12,7 +12,7 @@ async function run (): Promise<void> {
   try {
     const tfApiToken: string = core.getInput('tf_api_token');
     const tfOrg: string = core.getInput('tf_organization');
-    // const planOutput = core.getInput('tf_plan_output'); // should be input
+    const planOutput = core.getInput('tf_plan_output'); // should be input
 
     // @todo try the better way :)
     // async function terraform (){
@@ -39,7 +39,7 @@ async function run (): Promise<void> {
     //   });
     // };
 
-    const plan = await tfcloud.getJsonPlan(tfplan_result, tfOrg, tfApiToken);
+    const plan = await tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
 
     await writeFile('tfplan.json', Buffer.from(plan));
   } catch (error) {
