@@ -150,11 +150,10 @@ async function run () {
                   console.log(`exec error: ${error}`);
                 }
               });
-            const plan_clean = String(tfplan.stdout)
-            const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
+            const planOutput = String(tfplan).replace(/#|_|/g,function(match) {return replaceChars[match];})
             console.log(planOutput)
 
-            const plan = await getJsonPlan(planOutput, tfOrg, tfApiToken);
+            const plan = await tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
             yield writeFile('tfplan.json', Buffer.from(plan));
         }
         catch (error) {
