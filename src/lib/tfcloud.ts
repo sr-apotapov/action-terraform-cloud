@@ -27,7 +27,7 @@ function getPlanApiUrla (planOutput: string, tfOrg: string) {
  * @param tfOrg
  * @param tfApiToken
  */
-export async function getJsonPlan (planOutput: string, tfOrg: string, tfApiToken: string): Promise<string> {
+export async function getJsonPlanf (planOutput: string, tfOrg: string, tfApiToken: string): Promise<string> {
   const planApiUrl = getPlanApiUrla(planOutput, tfOrg);
 
   const planResult = await axios.get(planApiUrl, {

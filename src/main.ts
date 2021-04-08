@@ -68,7 +68,7 @@ async function run (): Promise<void> {
     const planOutput = cleanup(tfplan.stdout)
     console.log(planOutput)
         
-    const plan = await tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
+    const plan = await tfcloud.getJsonPlanf(planOutput, tfOrg, tfApiToken);
 
     await writeFile('tfplan.json', Buffer.from(plan));
   } catch (error) {
