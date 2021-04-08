@@ -39,9 +39,9 @@ function getPlanApiUrl(planOutput, tfOrg) {
       throw new Error(`planOutput is void: ${planOutput}`);
     }
   
-    else {
-        throw new Error(`Unable to find URL match for organization INDEX: ${tfOrg}`);
-    }
+    // else {
+    //     throw new Error(`Unable to find URL match for organization INDEX: ${tfOrg}`);
+    // }
 }
 /**
  * Finds the url from a CLI output and returns the Terraform Plan JSON output as a string
