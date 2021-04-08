@@ -111,15 +111,36 @@ const fs = __importStar(__nccwpck_require__(5747));
 const core = __importStar(__nccwpck_require__(2186));
 const tfcloud = __importStar(__nccwpck_require__(2901));
 const writeFile = util.promisify(fs.writeFile);
+function cleanup (log:string) {
+  var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
+  log.replace(/#|_|/g,function(match) {return replaceChars[match];})
+}
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const tfApiToken = core.getInput('tf_api_token');
             const tfOrg = core.getInput('tf_organization');
             const planOutput = core.getInput('tf_plan_output'); // should be input
-            // @todo try the better way :)
-            // exec("terraform init");
-            // const result = await exec("terraform plan");
+            var fmt = exec('terraform fmt -diff -check',
+            (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+                if (error !== null) {
+                    console.log(`exec error: ${error}`);
+                }
+            });
+            const new_fmt = cleanup(fmt.stdout)
+            console.log(new_fmt)
+            var tfplan = exec('terraform init; terraform plan -no-color',
+            (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+                if (error !== null) {
+                    console.log(`exec error: ${error}`);
+                }
+            });
+            const planOutput = cleanup(tfplan.stdout)
+            console.log(planOutput)
             const plan = yield tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
             yield writeFile('tfplan.json', Buffer.from(plan));
         }
