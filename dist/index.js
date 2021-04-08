@@ -1,3 +1,5 @@
+const { stdout, stderr } = require('node:process');
+
 require('./sourcemap-register.js');module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
@@ -119,29 +121,34 @@ function run() {
             const tfOrg = core.getInput('tf_organization');
             // const planOutput = core.getInput('tf_plan_output'); // should be input
             var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
-            var fmt = exec('terraform fmt -diff -check',
-            (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-                if (error !== null) {
-                    console.log(`exec error: ${error}`);
-                }
-            });
+            const init = await exec('terraform init') //tf init
+            // console.log(init)
+        
+            const fmt = await exec('terraform fmt -check -diff', (error, stdout, stderr) => {
+              console.log(stdout);
+              console.log(stderr);
+              if (error !== null) {
+                  console.log(`exec error: ${error}`);
+              }
+              }); // tf fmt with diff
+
             const fmt_clean = String(fmt.stdout)
             const fmtOutput = fmt_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
-
             console.log(fmtOutput)
-            var tfplan = exec('terraform init; terraform plan -no-color',
-            (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-                if (error !== null) {
-                    console.log(`exec error: ${error}`);
-                }
-            });
-            const plan_clean = String(tfplan.stdout)
-            const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
-            console.log(planOutput)
+            const tfplan = await exec('terraform plan -no-color', (error, stdout, stderr) => {
+              console.log(stdout);
+              console.log(stderr);
+              if (error !== null) {
+                  console.log(`exec error: ${error}`);
+              }
+              }); // tf fmt with diff
+
+              const plan_clean = String(tfplan.stdout)
+              const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
+              console.log(planOutput)
+                      
+            const planOutput = await exec('terraform plan -no-color') // tf plan
+            planOutput.replace(/#|_|/g,function(match) {return replaceChars[match];})
             const plan = yield tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
             yield writeFile('tfplan.json', Buffer.from(plan));
         }
