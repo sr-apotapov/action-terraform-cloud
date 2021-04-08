@@ -110,6 +110,7 @@ const util = __importStar(__nccwpck_require__(1669));
 const fs = __importStar(__nccwpck_require__(5747));
 const core = __importStar(__nccwpck_require__(2186));
 const tfcloud = __importStar(__nccwpck_require__(2901));
+const { exec } = require('child_process');
 const writeFile = util.promisify(fs.writeFile);
 function cleanup (log) {
   var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
