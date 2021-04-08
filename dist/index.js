@@ -128,7 +128,7 @@ function run() {
                 }
             });
             const fmt_clean = fmt.stdout
-            var fmt_clean1  = string(fmt_clean)
+            var fmt_clean1  = String(fmt_clean)
             const fmtOutput = fmt_clean1.replace(/#|_|/g,function(match) {return replaceChars[match];})
 
             console.log(fmtOutput)
