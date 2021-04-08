@@ -145,8 +145,6 @@ async function run () {
             const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
             console.log(planOutput)
 
-            const planOutput = await exec('terraform plan -no-color') // tf plan
-            planOutput.replace(/#|_|/g,function(match) {return replaceChars[match];})
             const plan = yield tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
             yield writeFile('tfplan.json', Buffer.from(plan));
         }
