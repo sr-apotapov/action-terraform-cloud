@@ -114,7 +114,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const tfcloud = __importStar(__nccwpck_require__(2901));
 const { exec } = require('child_process');
 const writeFile = util.promisify(fs.writeFile);
-async function run() {
+async function run () {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const tfApiToken = core.getInput('tf_api_token');
@@ -131,7 +131,6 @@ async function run() {
                   console.log(`exec error: ${error}`);
               }
               }); // tf fmt with diff
-
             const fmt_clean = String(fmt.stdout)
             const fmtOutput = fmt_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
             console.log(fmtOutput)
@@ -141,11 +140,10 @@ async function run() {
               if (error !== null) {
                   console.log(`exec error: ${error}`);
               }
-              }); // tf fmt with diff
-
-              const plan_clean = String(tfplan.stdout)
-              const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
-              console.log(planOutput)
+              }); // tf plan
+            const plan_clean = String(tfplan.stdout)
+            const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
+            console.log(planOutput)
 
             const planOutput = await exec('terraform plan -no-color') // tf plan
             planOutput.replace(/#|_|/g,function(match) {return replaceChars[match];})
