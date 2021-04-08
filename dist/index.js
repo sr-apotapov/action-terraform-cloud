@@ -123,8 +123,8 @@ async function run () {
             var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
             // TERRAFORM FMT //
             const fmt = await exec('terraform fmt -check -diff', (error, stdout, stderr) => {
-              console.log(stdout);
-              console.log(stderr);
+              process.stdout.write(stdout);
+              // console.log(stderr);
               if (error !== null) {
                   console.log(`exec error: ${error}`);
                 }
@@ -135,7 +135,7 @@ async function run () {
             // TERRAFORM INIT //
             const init = await exec('terraform init input=false -no-color', (error, stdout, stderr) => {
               console.log(stdout);
-              console.log(stderr);
+              // console.log(stderr);
               if (error !== null) {
                   console.log(`exec error: ${error}`);
                 }
