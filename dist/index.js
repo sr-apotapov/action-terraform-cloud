@@ -120,7 +120,7 @@ function run() {
         try {
             const tfApiToken = core.getInput('tf_api_token');
             const tfOrg = core.getInput('tf_organization');
-            const planOutput = core.getInput('tf_plan_output'); // should be input
+            // const planOutput = core.getInput('tf_plan_output'); // should be input
             var fmt = exec('terraform fmt -diff -check',
             (error, stdout, stderr) => {
                 console.log(stdout);
