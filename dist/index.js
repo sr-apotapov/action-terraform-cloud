@@ -31,16 +31,6 @@ function getPlanApiUrl(planOutput, tfOrg) {
         const urlSplit = match[0].split('/');
         return `https://app.terraform.io/api/v2/runs/${urlSplit[urlSplit.length - 1]}/plan`;
     }  
-    if (planOutput == null) {
-      throw new Error(`planOutput is null : ${planOutput}`);
-    }
-    if (planOutput == undefined){
-      throw new Error(`planOutput is undefined: ${planOutput}`);
-    }
-    if (planOutput == 'void'){
-      throw new Error(`planOutput is void: ${planOutput}`);
-    }
-  
     else {
         throw new Error(`Unable to find URL match for organization INDEX: ${tfOrg}`);
     }
