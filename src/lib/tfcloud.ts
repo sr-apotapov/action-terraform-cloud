@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-function getPlanApiUrl (planOutput: string, tfOrg: string) {
+function getPlanApiUrla (planOutput: string, tfOrg: string) {
   const urlRegex = new RegExp(`app\\.terraform\\.io\\/app\\/${tfOrg}\\/[A-Za-z0-9\\-]*\\/runs\\/run\\-[A-Za-z0-9]*`);
   const match = planOutput.match(urlRegex);
   if (match) {
@@ -28,7 +28,7 @@ function getPlanApiUrl (planOutput: string, tfOrg: string) {
  * @param tfApiToken
  */
 export async function getJsonPlan (planOutput: string, tfOrg: string, tfApiToken: string): Promise<string> {
-  const planApiUrl = getPlanApiUrl(planOutput, tfOrg);
+  const planApiUrl = getPlanApiUrla(planOutput, tfOrg);
 
   const planResult = await axios.get(planApiUrl, {
     headers: {
