@@ -6,53 +6,69 @@ import * as tfcloud from './lib/tfcloud';
 
 const writeFile = util.promisify(fs.writeFile);
 const { promisify } = require('util');
-const exec = promisify(require('child_process').exec)
+// const exec = promisify(require('child_process').exec)
+const { exec } = require('child_process');
 
 function cleanup (log:string) {
   var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
   log.replace(/#|_|/g,function(match) {return replaceChars[match];})
 }
-
-async function terraform(command:string): Promise<string> {
-  if (command == 'plan') {
-    const tfplan_out = await exec('terraform plan -no-color')
-    const planOutput = cleanup(tfplan_out)
-    return planOutput.data
-  } 
-  if (command == 'init') {
-    await exec('terraform init')
-  } 
-  if (command == 'fmt') {
-    const fmt_out = await exec('terraform fmt -check -diff')
-    const fmt = cleanup(fmt_out)
-    return fmt.data
-  }
-}
-
-
+// async function terraform(command:string): Promise<string> {
+//   if (command == 'plan') {
+//     const tfplan_out = await exec('terraform plan -no-color')
+//     const planOutput = cleanup(tfplan_out)
+//     return planOutput
+//   } 
+//   if (command == 'init') {
+//     await exec('terraform init')
+//   } 
+//   if (command == 'fmt') {
+//     const fmt_out = await exec('terraform fmt -check -diff')
+//     const fmt = cleanup(fmt_out)
+//     return JSON.stringify(fmt.data);
+//   }
+//   else {
+//     return "no command specified"
+//   }
+// }
 
 async function run (): Promise<void> {
   try {
     const tfApiToken: string = core.getInput('tf_api_token');
     const tfOrg: string = core.getInput('tf_organization');
     // const planOutput = core.getInput('plan_output'); // should be input
-    
-    const tffmt = terraform("fmt")
-    const tfinit = terraform("init")
-    const planOutput = terraform("plan")
-    
-    // var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
-    // await exec('terraform init') //tf init
-    // console.log(init)
 
-    // const fmt = await exec('terraform fmt -check -diff') // tf fmt with diff
-    // fmt.replace(/#|_|/g,function(match) {return replaceChars[match];}) // cleaning up the tf fmt results
-    // console.log(fmt)
-
-    // const planOutput = await exec('terraform plan -no-color') // tf plan
-    // planOutput.replace(/#|_|/g,function(match) {return replaceChars[match];})
-    // console.log(planOutput) // cleaning up the tf plan results
-    
+    var fmt = exec('terraform fmt -diff -check',
+        (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+            if (error !== null) {
+                console.log(`exec error: ${error}`);
+            }
+        });
+    const new_fmt = cleanup(fmt.stdout)
+    console.log(new_fmt)
+    var init = exec('terraform init',
+        (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+            if (error !== null) {
+                console.log(`exec error: ${error}`);
+            }
+        });
+    const init_out = cleanup(init.stdout)
+    console.log(init_out)
+    var tfplan = exec('terraform plan -no-color',
+        (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+            if (error !== null) {
+                console.log(`exec error: ${error}`);
+            }
+        });
+    const planOutput = cleanup(tfplan.stdout)
+    console.log(planOutput)
+        
     const plan = await tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
 
     await writeFile('tfplan.json', Buffer.from(plan));
