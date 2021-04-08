@@ -154,7 +154,7 @@ async function run () {
             const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
             console.log(planOutput)
 
-            const plan = yield tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
+            const plan = await getJsonPlan(planOutput, tfOrg, tfApiToken);
             yield writeFile('tfplan.json', Buffer.from(plan));
         }
         catch (error) {
