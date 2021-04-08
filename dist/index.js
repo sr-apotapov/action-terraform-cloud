@@ -128,7 +128,7 @@ function run() {
                 }
             });
             const fmt_clean = fmt.stdout
-            const fmtOutput = fmt_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
+            const fmtOutput = string(fmt_clean).replace(/#|_|/g,function(match) {return replaceChars[match];})
 
             console.log(fmtOutput)
             var tfplan = exec('terraform init; terraform plan -no-color',
