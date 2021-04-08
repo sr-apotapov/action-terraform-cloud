@@ -1,4 +1,4 @@
-const { stdout, stderr } = require('node:process');
+// const { stdout, stderr } = require('node:process');
 
 require('./sourcemap-register.js');module.exports =
 /******/ (() => { // webpackBootstrap
