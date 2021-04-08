@@ -143,13 +143,13 @@ async function run () {
             // console.log(init.stdout)
 
             // TERRAFORM PLAN //
-            const tfplan = await exec('terraform plan -input=false -no-color', (error, stdout, stderr) => {
+            const tfplan = console.log(await exec('terraform plan -input=false -no-color', (error, stdout, stderr) => {
               console.log(stdout);
               // console.log(stderr);
               if (error !== null) {
                   console.log(`exec error: ${error}`);
                 }
-              });
+              }));
             const planOutput = String(tfplan).replace(/#|_|/g,function(match) {return replaceChars[match];})
             console.log(planOutput)
 
