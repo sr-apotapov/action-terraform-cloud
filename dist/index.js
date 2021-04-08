@@ -134,8 +134,14 @@ async function run () {
             console.log(fmtOutput)
 
             // TERRAFORM INIT //
-            const init = await exec('terraform init') //tf init
-            console.log(init)
+            const init = await exec('terraform init', (error, stdout, stderr) => {
+              console.log(stdout);
+              console.log(stderr);
+              if (error !== null) {
+                  console.log(`exec error: ${error}`);
+                }
+              });  //tf init
+            console.log(init.stdout)
 
             // TERRAFORM PLAN //
             // const tfplan = await exec('terraform plan -no-color', (error, stdout, stderr) => {
