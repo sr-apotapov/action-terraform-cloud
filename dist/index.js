@@ -115,7 +115,7 @@ const tfcloud = __importStar(__nccwpck_require__(2901));
 const { exec } = require('child_process');
 const writeFile = util.promisify(fs.writeFile);
 async function run () {
-    return __awaiter(this, void 0, void 0, function* () {
+    return __awaiter(this, void 0, void 0, async function* () {
         try {
             const tfApiToken = core.getInput('tf_api_token');
             const tfOrg = core.getInput('tf_organization');
