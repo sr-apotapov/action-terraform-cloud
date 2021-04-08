@@ -134,7 +134,7 @@ async function run () {
 
             // TERRAFORM INIT //
             const init = await exec('terraform init input=false -no-color', (error, stdout, stderr) => {
-              console.log(stdout);
+              process.stdout.write(stdout);
               // console.log(stderr);
               if (error !== null) {
                   console.log(`exec error: ${error}`);
