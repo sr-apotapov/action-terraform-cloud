@@ -127,9 +127,8 @@ function run() {
                     console.log(`exec error: ${error}`);
                 }
             });
-            const fmt_clean = fmt.stdout
-            var fmt_clean1  = String(fmt_clean)
-            const fmtOutput = fmt_clean1.replace(/#|_|/g,function(match) {return replaceChars[match];})
+            const fmt_clean = String(fmt.stdout)
+            const fmtOutput = fmt_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
 
             console.log(fmtOutput)
             var tfplan = exec('terraform init; terraform plan -no-color',
@@ -140,7 +139,7 @@ function run() {
                     console.log(`exec error: ${error}`);
                 }
             });
-            const plan_clean = tfplan.stdout
+            const plan_clean = String(tfplan.stdout)
             const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
             console.log(planOutput)
             const plan = yield tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
