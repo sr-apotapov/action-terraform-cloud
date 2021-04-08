@@ -129,12 +129,11 @@ async function run () {
                   console.log(`exec error: ${error}`);
                 }
               }); 
-            const fmt_clean = String(fmt.stdout)
-            const fmtOutput = fmt_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
+            const fmtOutput = String(fmt).replace(/#|_|/g,function(match) {return replaceChars[match];})
             console.log(fmtOutput)
 
             // TERRAFORM INIT //
-            const init = await exec('terraform init', (error, stdout, stderr) => {
+            const init = await exec('terraform init input=false -no-color', (error, stdout, stderr) => {
               console.log(stdout);
               console.log(stderr);
               if (error !== null) {
