@@ -8,24 +8,28 @@ const writeFile = util.promisify(fs.writeFile);
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec)
 
-async function terraform(command:string): Promise<string> {
+function cleanup (log:string) {
+  var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
+  log.replace(/#|_|/g,function(match) {return replaceChars[match];})
+}
+
+async function terraform(command:string): Promise<any> {
   if (command == 'plan') {
-    const planOutput = await exec('terraform plan -no-color')
+    const tfplan_out = await exec('terraform plan -no-color')
+    const planOutput = cleanup(tfplan_out)
     return planOutput.data
   } 
   if (command == 'init') {
     await exec('terraform init')
   } 
   if (command == 'fmt') {
-    const fmt = await exec('terraform fmt -check -diff')
+    const fmt_out = await exec('terraform fmt -check -diff')
+    const fmt = cleanup(fmt_out)
     return fmt.data
   }
 }
 
-function cleanup (log) {
-  var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
-  log.replace(/#|_|/g,function(match) {return replaceChars[match];})
-}
+
 
 async function run (): Promise<void> {
   try {
@@ -34,10 +38,8 @@ async function run (): Promise<void> {
     // const planOutput = core.getInput('plan_output'); // should be input
     
     const tffmt = terraform("fmt")
-    const fmt = cleanup(tffmt)
     const tfinit = terraform("init")
-    const tfplan = terraform("plan")
-    const planOutput = cleanup(tfplan)
+    const planOutput = terraform("plan")
     
     // var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
     // await exec('terraform init') //tf init
