@@ -119,7 +119,7 @@ async function run () {
         try {
             const tfApiToken = core.getInput('tf_api_token');
             const tfOrg = core.getInput('tf_organization');
-            // const planOutput = core.getInput('tf_plan_output'); // should be input
+            const planOutput = core.getInput('tf_plan_output'); // should be input
             // var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
             // TERRAFORM FMT //
 
