@@ -13,7 +13,7 @@ function cleanup (log:string) {
   log.replace(/#|_|/g,function(match) {return replaceChars[match];})
 }
 
-async function terraform(command:string): Promise<any> {
+async function terraform(command:string): Promise<string> {
   if (command == 'plan') {
     const tfplan_out = await exec('terraform plan -no-color')
     const planOutput = cleanup(tfplan_out)

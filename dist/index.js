@@ -30,7 +30,7 @@ function getPlanApiUrl(planOutput, tfOrg) {
         return `https://app.terraform.io/api/v2/runs/${urlSplit[urlSplit.length - 1]}/plan`;
     }
     else {
-        throw new Error(`Unable to find URL match for organization: ${tfOrg}`);
+        throw new Error(`Unable to find URL match for organization INDEX: ${tfOrg}`);
     }
 }
 /**
