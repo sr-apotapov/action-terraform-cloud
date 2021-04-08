@@ -6,7 +6,14 @@ function getPlanApiUrl (planOutput: string, tfOrg: string) {
   if (match) {
     const urlSplit = match[0].split('/');
     return `https://app.terraform.io/api/v2/runs/${urlSplit[urlSplit.length - 1]}/plan`;
-  } else {
+  } 
+  if (planOutput == null){
+    throw new Error(`planOutput is null : ${planOutput}`);
+  }
+  if (planOutput == undefined){
+    throw new Error(`planOutput is undefined: ${planOutput}`);
+  }
+  else {
     throw new Error(`Unable to find URL match for organization: ${tfOrg}`);
   }
 }
