@@ -121,8 +121,6 @@ async function run () {
             const tfOrg = core.getInput('tf_organization');
             // const planOutput = core.getInput('tf_plan_output'); // should be input
             var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
-            const init = await exec('terraform init') //tf init
-            console.log(init)
             // TERRAFORM FMT //
             const fmt = await exec('terraform fmt -check -diff', (error, stdout, stderr) => {
               console.log(stdout);
@@ -136,7 +134,8 @@ async function run () {
             console.log(fmtOutput)
 
             // TERRAFORM INIT //
-            const init = await exec('terraform init')
+            const init = await exec('terraform init') //tf init
+            console.log(init)
 
             // TERRAFORM PLAN //
             const tfplan = await exec('terraform plan -no-color', (error, stdout, stderr) => {
