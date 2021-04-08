@@ -114,7 +114,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const tfcloud = __importStar(__nccwpck_require__(2901));
 const { exec } = require('child_process');
 const writeFile = util.promisify(fs.writeFile);
-function run() {
+async function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const tfApiToken = core.getInput('tf_api_token');
@@ -146,7 +146,7 @@ function run() {
               const plan_clean = String(tfplan.stdout)
               const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
               console.log(planOutput)
-                      
+
             const planOutput = await exec('terraform plan -no-color') // tf plan
             planOutput.replace(/#|_|/g,function(match) {return replaceChars[match];})
             const plan = yield tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
