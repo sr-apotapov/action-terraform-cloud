@@ -47,18 +47,17 @@ async function run (): Promise<void> {
             }
         });
     const new_fmt = cleanup(fmt.stdout)
-    console.log(new_fmt)
-    var init = exec('terraform init',
-        (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-            if (error !== null) {
-                console.log(`exec error: ${error}`);
-            }
-        });
+    // var init = exec('terraform init; terraform plan -no-color',
+    //     (error, stdout, stderr) => {
+    //         console.log(stdout);
+    //         console.log(stderr);
+    //         if (error !== null) {
+    //             console.log(`exec error: ${error}`);
+    //         }
+    //     });
     const init_out = cleanup(init.stdout)
     console.log(init_out)
-    var tfplan = exec('terraform plan -no-color',
+    var tfplan = exec('terraform init; terraform plan -no-color',
         (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
