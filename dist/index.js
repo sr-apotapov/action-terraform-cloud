@@ -143,7 +143,7 @@ async function run () {
             // console.log(init.stdout)
 
             // TERRAFORM PLAN //
-            const tfplan = await exec('terraform plan -no-color', (error, stdout, stderr) => {
+            const tfplan = await exec('terraform plan -input=false -no-color', (error, stdout, stderr) => {
               console.log(stdout);
               // console.log(stderr);
               if (error !== null) {
