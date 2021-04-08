@@ -133,26 +133,26 @@ async function run () {
             console.log(fmtOutput)
 
             // TERRAFORM INIT //
-            const init = await exec('terraform init input=false -no-color', (error, stdout, stderr) => {
-              process.stdout.write(stdout);
-              // console.log(stderr);
-              if (error !== null) {
-                  console.log(`exec error: ${error}`);
-                }
-              });  //tf init
-            console.log(init.stdout)
-
-            // TERRAFORM PLAN //
-            // const tfplan = await exec('terraform plan -no-color', (error, stdout, stderr) => {
-            //   console.log(stdout);
+            // const init = await exec('terraform init input=false -no-color', (error, stdout, stderr) => {
+            //   process.stdout.write(stdout);
             //   // console.log(stderr);
             //   if (error !== null) {
             //       console.log(`exec error: ${error}`);
             //     }
-            //   });
-            // const plan_clean = String(tfplan.stdout)
-            // const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
-            // console.log(planOutput)
+            //   });  //tf init
+            // console.log(init.stdout)
+
+            // TERRAFORM PLAN //
+            const tfplan = await exec('terraform plan -no-color', (error, stdout, stderr) => {
+              console.log(stdout);
+              // console.log(stderr);
+              if (error !== null) {
+                  console.log(`exec error: ${error}`);
+                }
+              });
+            const plan_clean = String(tfplan.stdout)
+            const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
+            console.log(planOutput)
 
             const plan = yield tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
             yield writeFile('tfplan.json', Buffer.from(plan));
