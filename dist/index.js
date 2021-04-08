@@ -122,13 +122,13 @@ async function run () {
             // const planOutput = core.getInput('tf_plan_output'); // should be input
             var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
             // TERRAFORM FMT //
-            // const fmt = await exec('terraform fmt -check -diff', (error, stdout, stderr) => {
-            //   console.log(stdout);
-            //   console.log(stderr);
-            //   if (error !== null) {
-            //       console.log(`exec error: ${error}`);
-            //   }
-            //   }); 
+            const fmt = await exec('terraform fmt -check -diff', (error, stdout, stderr) => {
+              console.log(stdout);
+              console.log(stderr);
+              if (error !== null) {
+                  console.log(`exec error: ${error}`);
+                }
+              }); 
             const fmt_clean = String(fmt.stdout)
             const fmtOutput = fmt_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
             console.log(fmtOutput)
@@ -138,16 +138,16 @@ async function run () {
             console.log(init)
 
             // TERRAFORM PLAN //
-            const tfplan = await exec('terraform plan -no-color', (error, stdout, stderr) => {
-              console.log(stdout);
-              console.log(stderr);
-              if (error !== null) {
-                  console.log(`exec error: ${error}`);
-              }
-              }); // tf plan
-            const plan_clean = String(tfplan.stdout)
-            const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
-            console.log(planOutput)
+            // const tfplan = await exec('terraform plan -no-color', (error, stdout, stderr) => {
+            //   console.log(stdout);
+            //   // console.log(stderr);
+            //   if (error !== null) {
+            //       console.log(`exec error: ${error}`);
+            //     }
+            //   });
+            // const plan_clean = String(tfplan.stdout)
+            // const planOutput = plan_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
+            // console.log(planOutput)
 
             const plan = yield tfcloud.getJsonPlan(planOutput, tfOrg, tfApiToken);
             yield writeFile('tfplan.json', Buffer.from(plan));
