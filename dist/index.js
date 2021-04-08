@@ -23,7 +23,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getJsonPlan = void 0;
 const axios_1 = __importDefault(__nccwpck_require__(6545));
 function getPlanApiUrl(planOutput, tfOrg) {
-    const urlRegex = new RegExp(`app\\.terraform\\.io\\/app\\/${tfOrg}\\/[A-Za-z0-9\\-]*\\/runs\\/run\\-[A-Za-z0-9]*`);
+    const urlRegex = new RegExp(`app\\.terraform\\.io\\/app\\/ShopRunner\\/[A-Za-z0-9\\-]*\\/runs\\/run\\-[A-Za-z0-9]*`);
     const match = planOutput.match(urlRegex);
     if (match) {
         const urlSplit = match[0].split('/');
