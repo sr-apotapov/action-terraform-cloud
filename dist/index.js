@@ -122,13 +122,13 @@ async function run () {
             // const planOutput = core.getInput('tf_plan_output'); // should be input
             var replaceChars={ "%":"%25" , "%\n":"%0A" , "\r":"%0D" , "$": "\$" , "`": "%60" }; // cleanup settings
             // TERRAFORM FMT //
-            const fmt = await exec('terraform fmt -check -diff', (error, stdout, stderr) => {
-              console.log(stdout);
-              console.log(stderr);
-              if (error !== null) {
-                  console.log(`exec error: ${error}`);
-              }
-              }); 
+            // const fmt = await exec('terraform fmt -check -diff', (error, stdout, stderr) => {
+            //   console.log(stdout);
+            //   console.log(stderr);
+            //   if (error !== null) {
+            //       console.log(`exec error: ${error}`);
+            //   }
+            //   }); 
             const fmt_clean = String(fmt.stdout)
             const fmtOutput = fmt_clean.replace(/#|_|/g,function(match) {return replaceChars[match];})
             console.log(fmtOutput)
